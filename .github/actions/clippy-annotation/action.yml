@@ -16,7 +16,7 @@ runs:
         CMD="cargo clippy"
 
         if [[ "${{ inputs.commands }}" != "" ]]; then
-          CMD="$CMD ${{ inputs.features }}"
+          CMD="$CMD ${{ inputs.commands }}"
         fi
 
         if [[ "${{ inputs.with-annotation }}" == "true" ]]; then

@@ -1,7 +1,7 @@
-name: "Clippy Annotation"
-description: "Github inline annotation for clippy"
+name: "Cargo Clippy"
+description: "Runs `cargo clippy` with optional extra commands and GitHub annotation support for inline diagnostics."
 inputs:
-  commands:
+  cargo-command:
     description: "Clippy extra arguments"
     default: ""
   with-annotation:
@@ -11,12 +11,12 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: clippy
+    - name: cargo clippy
       run: |
         CMD="cargo clippy"
 
-        if [[ "${{ inputs.commands }}" != "" ]]; then
-          CMD="$CMD ${{ inputs.commands }}"
+        if [[ "${{ inputs.cargo-command }}" != "" ]]; then
+          CMD="$CMD ${{ inputs.cargo-command }}"
         fi
 
         if [[ "${{ inputs.with-annotation }}" == "true" ]]; then

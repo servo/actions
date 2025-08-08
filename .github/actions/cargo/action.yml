@@ -1,0 +1,27 @@
+name: "Cargo"
+description: "Runs `cargo` with extra commands and GitHub annotation support for inline diagnostics."
+inputs:
+  cargo-command:
+    description: "Cargo command"
+    default: ""
+  with-annotation:
+    description: "Enable annotation"
+    default: "false"
+
+runs:
+  using: "composite"
+  steps:
+    - name: cargo
+      run: |
+        CMD="cargo"
+
+        if [[ "${{ inputs.cargo-command }}" != "" ]]; then
+          CMD="$CMD ${{ inputs.cargo-command }}"
+        fi
+
+        if [[ "${{ inputs.with-annotation }}" == "true" ]]; then
+          CMD="$CMD --message-format=json | ${{ github.action_path }}/annotation.sh"
+        fi
+
+        eval "$CMD"
+      shell: bash

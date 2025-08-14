@@ -1,12 +1,12 @@
 name: "Cargo"
-description: "Runs `cargo` with extra commands and GitHub annotation support for inline diagnostics."
+description: "Runs the given `cargo` command with support for GitHub Annotations."
 inputs:
   cargo-command:
     description: "Cargo command"
-    default: ""
+    required: true
   with-annotation:
-    description: "Enable annotation"
-    default: "false"
+    description: "Enable Github Annotations"
+    default: "true"
 
 runs:
   using: "composite"

@@ -19,6 +19,14 @@ runs:
           CMD="$CMD ${{ inputs.cargo-command }}"
         fi
 
+        if [[ "${{ inputs.with-annotation }}" == "true" ]]; then
+          if [[ "$CMD" == *"-- -D warnings"* ]]; then
+            CMD="${CMD/-- -D warnings/} --message-format=json -- -D warnings"
+          else
+            CMD="$CMD --message-format=json"
+          fi
+        fi
+
         eval "$CMD | ${{ github.action_path }}/annotation.sh"
       shell: bash
       env:

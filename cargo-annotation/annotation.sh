@@ -14,7 +14,7 @@ annotations=$(jq -r '
 ')
 
 # Print the annotations
-if [[ -n "$annotations" ]]; then
+if [[ -n "$annotations" && "${WITH_ANNOTATION}" == "true" ]]; then
     echo "$annotations"
     exit 1
 fi

@@ -20,14 +20,10 @@ runs:
         fi
 
         if [[ "${{ inputs.with-annotation }}" == "true" ]]; then
-          if [[ "$CMD" == *"-- -D warnings"* ]]; then
-            CMD="${CMD/-- -D warnings/} --message-format=json -- -D warnings"
-          else
-            CMD="$CMD --message-format=json"
-          fi
+          CMD="$CMD --message-format=json"
         fi
 
-        eval "$CMD | ${{ github.action_path }}/annotation.sh"
+        eval "$CMD -- -D warnings | ${{ github.action_path }}/annotation.sh"
       shell: bash
       env:
         WITH_ANNOTATION: ${{ inputs.with-annotation }}

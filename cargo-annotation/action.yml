@@ -12,18 +12,8 @@ runs:
   using: "composite"
   steps:
     - name: cargo
-      run: |
-        CMD="cargo"
-
-        if [[ "${{ inputs.cargo-command }}" != "" ]]; then
-          CMD="$CMD ${{ inputs.cargo-command }}"
-        fi
-
-        if [[ "${{ inputs.with-annotation }}" == "true" ]]; then
-          CMD="$CMD --message-format=json"
-        fi
-
-        eval "$CMD | ${{ github.action_path }}/annotation.sh"
+      run: python ${{ github.action_path }}//annotation.py
       shell: bash
       env:
+        INPUT_CARGO_COMMAND: ${{ inputs.cargo-command }}
         WITH_ANNOTATION: ${{ inputs.with-annotation }}

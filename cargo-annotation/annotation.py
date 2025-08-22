@@ -4,6 +4,7 @@ import os
 import subprocess
 import json
 import sys
+import shlex
 
 
 def emit_annotation_for_clippy(results, with_annotation):
@@ -65,7 +66,8 @@ def main():
     )
 
     if cargo_command:
-        cmd.extend(cargo_command.split())
+        args = shlex.split(cargo_command)
+        cmd.extend(args)
 
     if "--message-format=json" not in cmd:
         cmd.append("--message-format=json")
@@ -81,4 +83,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

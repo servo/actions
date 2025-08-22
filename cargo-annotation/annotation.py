@@ -5,9 +5,10 @@ import subprocess
 import json
 import sys
 import shlex
+from typing import Any
 
 
-def emit_annotation_for_clippy(results, with_annotation):
+def emit_annotation_for_clippy(results: list[dict[str, Any]], with_annotation: bool):
     total_count = 0
     limit = 10
 

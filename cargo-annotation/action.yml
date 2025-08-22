@@ -12,7 +12,7 @@ runs:
   using: "composite"
   steps:
     - name: cargo
-      run: python ${{ github.action_path }}//annotation.py
+      run: python $GITHUB_ACTION_PATH/annotation.py
       shell: bash
       env:
         INPUT_CARGO_COMMAND: ${{ inputs.cargo-command }}

@@ -25,5 +25,6 @@ runs:
 
         eval "$CMD | ${{ github.action_path }}/annotation.sh"
       shell: bash
+      working-directory: ./cargo-annotation
       env:
         WITH_ANNOTATION: ${{ inputs.with-annotation }}

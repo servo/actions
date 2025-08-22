@@ -23,7 +23,7 @@ runs:
           CMD="$CMD --message-format=json"
         fi
 
-        eval "$CMD | ${{ github.action_path }}/annotation.sh"
+        eval "$CMD | $GITHUB_ACTION_PATH/annotation.sh"
       shell: bash
       env:
         WITH_ANNOTATION: ${{ inputs.with-annotation }}

@@ -13,8 +13,9 @@ annotations=$(jq -r '
   | "::\($msg.level) file=\(.file_name),line=\(.line_start),col=\(.column_start)\(if .column_end != .column_start then ",endColumn=\(.column_end)" else "" end)::\($msg.message)"
 ')
 
-# Print the annotations
-if [[ -n "$annotations" && "${WITH_ANNOTATION}" == "true" ]]; then
-    echo "$annotations"
+if [[ -n "$annotations" ]]; then
+    if [[ "${WITH_ANNOTATION}" == "true" ]]; then
+        echo "$annotations"
+    fi
     exit 1
 fi

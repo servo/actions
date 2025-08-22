@@ -53,6 +53,7 @@ def emit_annotation_for_clippy(results, with_annotation):
             print(
                 f"::{level} file={file_name},{column_info}{line_info}::{rendered_message}"
             )
+        total_count += 1
 
     return 1 if total_count > 0 else 0
 

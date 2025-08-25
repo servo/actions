@@ -8,7 +8,7 @@ import shlex
 from typing import Any
 
 
-def emit_annotation_for_clippy(results: list[dict[str, Any]], with_annotation: bool):
+def parse_cargo_output(results: list[dict[str, Any]], with_annotation: bool) -> bool:
     total_count = 0
     limit = 10
 
@@ -56,7 +56,7 @@ def emit_annotation_for_clippy(results: list[dict[str, Any]], with_annotation: b
             )
         total_count += 1
 
-    return 1 if total_count > 0 else 0
+    return total_count > 0
 
 
 def main():
@@ -74,13 +74,13 @@ def main():
     if "--message-format=json" not in cmd:
         cmd.append("--message-format=json")
 
-    proc = subprocess.run(cmd, capture_output=with_annotation)
+    proc = subprocess.run(cmd, capture_output=True)
     clippy_results = [
         json.loads(line) for line in proc.stdout.splitlines() if line.strip()
     ]
 
-    result = emit_annotation_for_clippy(clippy_results, with_annotation)
-    sys.exit(result)
+    result = parse_cargo_output(clippy_results, with_annotation)
+    sys.exit(int(result))
 
 
 if __name__ == "__main__":

@@ -8,6 +8,10 @@ import shlex
 from typing import Any
 
 
+def normalize_path(path: str) -> str:
+    return path.removeprefix("./")
+
+
 def parse_cargo_output(results: list[dict[str, Any]], with_annotation: bool) -> bool:
     total_count = 0
     limit = 10
@@ -35,11 +39,11 @@ def parse_cargo_output(results: list[dict[str, Any]], with_annotation: bool) -> 
         title = message.get("message", "")
         rendered_message = message.get("rendered", "")
 
-        file_name = (primary_span["file_name"],)
-        line_start = (primary_span["line_start"],)
-        line_end = (primary_span["line_end"],)
-        column_start = (primary_span["column_start"],)
-        column_end = (primary_span["column_end"],)
+        file_name = normalize_path(primary_span["file_name"])
+        line_start = primary_span["line_start"]
+        line_end = primary_span["line_end"]
+        column_start = primary_span["column_start"]
+        column_end = primary_span["column_end"]
 
         line_info = f"line={line_start},endLine={line_end},title={title}"
 

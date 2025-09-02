@@ -12,6 +12,10 @@ def normalize_path(path: str) -> str:
     return path.removeprefix("./")
 
 
+def escape_newlines(s: str) -> str:
+    return s.replace("\r", "%0D").replace("\n", "%0A")
+
+
 def parse_cargo_output(results: list[dict[str, Any]], with_annotation: bool) -> bool:
     total_count = 0
     limit = 10
@@ -37,7 +41,7 @@ def parse_cargo_output(results: list[dict[str, Any]], with_annotation: bool) -> 
 
         level = severenty_map.get(message.get("level"), "error")
         title = message.get("message", "")
-        rendered_message = message.get("rendered", "")
+        rendered_message = escape_newlines(message.get("rendered", ""))
 
         file_name = normalize_path(primary_span["file_name"])
         line_start = primary_span["line_start"]
